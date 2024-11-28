@@ -1,6 +1,7 @@
 #base robot_giant.pop
 #base robot_standard.pop
 #base reverse_timer_text_v3.pop
+#base overclock_cactus_general.pop
 //#base judge_restricts.pop
 
 // Mission by Claudz
@@ -164,8 +165,8 @@ Bread
 			"mod mini-crit airborne" 		0
 			"clip size bonus upgrade" 		2
 			"fire rate bonus" 				0
-			"damage penalty" 				4
-			"projectile lifetime" 			5 // remember to bump this up for bosses
+			"damage penalty" 				3.75
+			"projectile lifetime" 			5.5 // remember to bump this up for bosses
 			"override projectile type" 		13
 			"projectile spread angle mult" 	2
 			"penetrate teammates" 			1
@@ -425,39 +426,8 @@ Bread
             "dmg bonus vs buildings" "1.25"
             "mult dmg vs npc" 2.5
         }
-        // "sentry_minigun" {
-        //     OriginalItemName "Tomislav"
-        //     //"sniper fires tracer" 1
-        //     "spread penalty" "0.3"
-        //     "projectile spread angle penalty" "0.1"
-        //     "weapon spread bonus" 0.1
-        //     //"projectile penetration" 1
-        //     "projectile penetration heavy" "3"
-        //     //"shot penetrate all players" "1"
-        //     // "override projectile type" 13
-        //     //"mult_postfiredelay" "1.2"
-        // }
-        // "Piercing_Sentry"
-        // {
-        //     OriginalItemName "TF_WEAPON_PDA_ENGINEER_BUILD" //Item "Upgradeable TF_WEAPON_PDA_ENGINEER_BUILD"
-        //     "sentry bullet weapon" "sentry_minigun" //"TF_WEAPON_MINIGUN" 
-
-        // }
 
     }
-    // ExtraLoadoutItems
-	// {
-	// 	//AllowEquipOutsideSpawn 1 // Allow equipping items outside spawn
-	// 	Engineer // Player Class
-	// 	{
-	// 		PDA // Extended syntax, Item slot to use
-	// 		{
-	// 			Item  "Piercing_Sentry" // Item name, custom weapon names are available
-	// 			//Cost 100 // The cost of the weapon (default: 0)
-	// 		}
-
-	// 	}
-	// }
 
     ExtendedUpgrades
     {
@@ -561,7 +531,7 @@ Bread
                 "TeamNum"    "2"
             }
             filter_multi 
-            { // is red
+            {
                 "targetname" "filter_is_red_player"
                 "Negated"    "0"
                 "FilterType" "0" //and                
@@ -593,7 +563,7 @@ Bread
                 "condition"  "57" //WoF uber
             }
             filter_multi 
-            { // is red, AND is NOT ubered
+            { // is red player, AND is NOT ubered
                 "targetname" "filter_is_red_not_ubered"
                 "Negated"    "0"
                 "FilterType" "0" //and                
@@ -1246,6 +1216,27 @@ Bread
             // }
             OnSpawnOutput
             {
+                Target "!parent"
+                Action "AddOutput"
+                Param  "targetname breadtank"
+                Delay  0.5
+            }
+            OnSpawnOutput
+            {
+                Target "!parent"
+                Action "RunScriptCode"
+                Param  "NetProps.SetPropString(self, `m_iName`, `breadtank`)"
+                Delay  1
+            }
+            // OnSpawnOutput
+            // {
+            //     Target "!parent"
+            //     Action "RunScriptCode"
+            //     Param  "ClientPrint(null,3,self.tostring())"
+            //     Delay  0.2
+            // }
+            OnSpawnOutput
+            {
                 Target "!activator"
                 Action "AddOutput"
                 Param  "OnUser1 erupt_relay:Trigger:0:0:-1,0,-1" 
@@ -1355,6 +1346,8 @@ Bread
             logic_relay
             {
                 "targetname" "breadintro"
+                "OnTrigger"  "tf_gamerules,RunScriptCode,SwitchMedsOffMedigun(),1.9,-1"
+                //"OnTrigger"  "!activatorRunScriptCodeSwitchMedsOffMedigun()0.2-1"
                 "OnTrigger"  "fadeforcutscene,trigger,,1.3"
                 "OnTrigger"  "digtimer,Enable,,1.7,-1"
                 "OnTrigger"  "camera*,$EnableAll,,2"
@@ -2663,7 +2656,7 @@ Bread
                 "spawnflags" "1"
                 "wait" "0.8"
                 "OnTrigger" "!activator,bleedplayer,3,0,-1"
-                "OnTrigger" "!activatorRunScriptCodeself.TakeDamageEx(bread_bite_dmg, activator, null, Vector(), Vector(), 75, 0)0-1"
+                "OnTrigger" "!activatorRunScriptCodeself.TakeDamageEx(bread_bite_dmg, activator, null, Vector(), Vector(), 90, 0)0-1"
                 "OnTrigger" "!activator,$PlaySoundToSelf,=30|weapons\cleaver_hit_03.wav,0,-1"
                 "filtername" "filter_is_red_not_ubered"
                 "StartDisabled" "1"
@@ -3419,7 +3412,7 @@ Bread
                 "filtername" "filter_is_player"
                 "OnStartTouch" "!activatorRunScriptCodeself.ApplyAbsVelocityImpulse(Vector(0,0,700))0.1-1"
                 "OnStartTouch" "!activatorRunScriptCodeself.EmitSound(`General.banana_slip`)0.1-1"
-                "OnStartTouch" "!activatorRunScriptCodeself.TakeDamage(65,1,self)0.1-1"
+                "OnStartTouch" "!activatorRunScriptCodeself.TakeDamage(75,1,self)0.1-1"
 
                 "wait" "0.1"
                 "StartDisabled" "1"
@@ -5683,7 +5676,7 @@ Bread
                 "projectile speed decreased" 0.5 // 0.4
                 "fire rate bonus" 0.3
                 "attach particle effect" 250
-                "fire rate penalty" 4
+                "fire rate penalty" 3
                 "mod projectile heat aim time" 0.2
                 "mod projectile heat no predict target speed" 1
                 "mod projectile heat aim start time" 0.50
@@ -5983,7 +5976,7 @@ Bread
                 //"blast radius increased" 1.15
                 "Projectile speed increased" 0.55
                 "projectile spread angle penalty" 3
-                "heal on hit for rapidfire" 444
+                "heal on hit for rapidfire" 222
                 "no self blast dmg" 1
                 "penetrate teammates" 1
                 "custom projectile model" "models\weapons\c_models\c_bread\c_bread_plainloaf.mdl"
@@ -6039,6 +6032,7 @@ Bread
                 "fire rate bonus" 0.2
                 "faster reload rate" 0.3
                 "cancel falling damage" 1
+                "move speed bonus"	0.6
             }
             ItemAttributes
             {
@@ -6251,7 +6245,7 @@ Bread
         RunForThisManyWaves 1
         CooldownTime        40
         DesiredCount        2
-        InitialCooldown     100
+        InitialCooldown     60
         TFBot
         {
             Template T_TFBot_Spy_Bread
@@ -6266,7 +6260,7 @@ Bread
         Where               spawnbot_mission_spy
         BeginAtWave         2
         RunForThisManyWaves 1
-        CooldownTime        70
+        CooldownTime        60
         DesiredCount        1
         InitialCooldown     80
     
@@ -6286,138 +6280,6 @@ Bread
         Z 120
         TeamNum 3
     }
-    // Wave // Wave 0
-    // {
-    //     StartWaveOutput
-    //     {
-    //         Target wave_start_relay_ironman 
-    //         Action Trigger
-    //     }
-
-    //     DoneOutput
-    //     {
-    //         Target wave_finished_relay
-    //         Action Trigger
-    //     }
-
-    //     InitWaveOutput
-    //     {
-    //         Target gamerules
-    //         Action RunScriptCode
-    //         Param "
-    //             EntFire(`bombpath_choose_relay`, `Disable`, null, 0)
-    //             EntFire(`bombpath_choose_relay`, `Disable`, null, 0.1)
-    //             EntFire(`bombpath_choose_relay`, `Disable`, null, 0.2)
-
-
-    //             EntFire(`bombpath_clearall_relay`, `Trigger`, null, 0.9)
-    //             EntFire(`bombpath_arrows_clear_relay`, `Trigger`, null, 0.9)
-    //             EntFire(`bombpath_left`, `Trigger`, null, 1.0)
-    //             ClientPrint(null,3,`\x078ff347 The yeast has risen and it is hungry...`)
-    //             ClientPrint(null,3,`\x078ff347 Beware the digestive Acid: it makes you bleed and coats you in Jarate`)
-    //             ClientPrint(null,3,`\x078ff347 However, it also makes you and zombies move faster!`)  
-    //             TextualTimer.SetParams({
-    //                 automatic = false 
-    //             })              
-    //         "
-    //     }
-    //     WaveSpawn
-    //     {
-    //         Name "w1es"
-    //         //WaitForAllSpawned "w1b2"
-    //         Where spawnbot_void1
-    //         Where spawnbot_void2
-    //         Where spawnbot_void3
-    //         Where spawnbot_void4
-    //         TotalCount 21
-    //         MaxActive 1
-    //         SpawnCount 1
-    //         WaitBeforeStarting 0
-    //         WaitBetweenSpawns 8
-    //         TotalCurrency 0
-    //         Support 1
-    //         TFBot
-    //         {
-    //             Item "Bread Biter"
-    //             Item "Pop-eyes"
-    //             //Attributes AlwaysFireWeapon
-
-    //             Class Pyro
-    //             Name "ok wise guy"
-    //             Skill Expert
-    //             Health 2000
-    //             UseBestWeapon 1
-    //             Scale 1.5
-    //             //WeaponRestrictions PrimaryOnly
-    //             //WeaponRestrictions SecondaryOnly
-    //             Attributes MiniBoss
-    //             Action Mobber
-    //             Item "Festive Flare Gun"
-    //             ExtAttr AlwaysFireWeaponAlt
-    //             //Attributes DisableDodge
-    //             CharacterAttributes
-    //             {
-    //                 "move speed bonus"	0.8
-    //                 "damage force reduction" 0.6
-    //                 "airblast vulnerability multiplier" 0.6
-    //                 //"override footstep sound set" 6
-    //                 "damage causes airblast" 1
-    //             }
-    //             ItemAttributes
-    //             {
-    //                 ItemName "Festive Flare Gun"
-    //                 "Is_Passive_Weapon" 1
-    //                 "fire rate bonus" 0.75
-    //                 "faster reload rate" 0.75
-    //             }
-    //             InterruptAction [$SIGSEGV] // Stop current bot ai and force the bot to move to a location
-	// 			{
-	// 				Target "-4293 -8498 -5129" //"tent_spot_void1" // Move target location
-	// 				// Target "targetent" // Entity / bot / class name as an alternative. Also: RandomEnemy, ClosestPlayer
-	// 				AimTarget "ClosestPlayer" // Where the bot should look at
-	// 				KillAimTarget 1 // Attack aim target (Default: 0)
-	// 				Delay 0 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
-    //                 Repeats 0 // How many times should bot do the task in total (Default: 0 - Infinite)
-    //                 Cooldown 1 //Time between each task (Default: 10)
-	// 				Duration 10 // How long should the ai be interrupted
-	// 				WaitUntilDone 1 // If set, duration timer only starts when the bot moves to the target location or the aim target is killed (Default: 0)
-	// 				Distance 100 // How close should bot move to the target (Default: 0)
-	// 				AddToQueue 1 // If there is already another interrupt action active, start this action after previous interrupt action ends (Default: 0)
-	// 				// StopCurrentInterruptAction 1 // If there is already another interrupt action active, completely stop previous action instead of suspending it (Default: 0)
-	// 			}
-    //         }
-    //     }
-    //     WaveSpawn // Dummy
-    //     {
-    //         WaitForAllDead ""
-    //         TotalCount 0
-    //         SpawnCount 0
-    //         WaitBeforeStarting 200
-        
-    //         StartWaveWarningSound ""
-    //         FirstSpawnWarningSound ""
-        
-    //     }
-    //     //         WaveSpawn
-    //     // {
-    //     //     Name "w1d1"
-    //     //     WaitForAllSpawned "w1b1"
-    //     //     Where spawnbot
-    //     //     TotalCount 4
-    //     //     MaxActive 2
-    //     //     SpawnCount 1
-    //     //     WaitBeforeStarting 0
-    //     //     WaitBetweenSpawns 0
-    //     //     TotalCurrency 1000        
-
-    //     //     TFBot
-    //     //     {
-    //     //         Template T_TFBot_Sniper_Giant_Acid_Huntsman_Burst
-    //     //         Item "Bread Biter"
-    //     //     }
-
-    //     // }
-    // }
 
     // Wave 1 - 1700 Currency
     Wave
@@ -6444,7 +6306,6 @@ Bread
                 EntFire(`bombpath_choose_relay`, `Disable`, null, 0)
                 EntFire(`bombpath_choose_relay`, `Disable`, null, 0.1)
                 EntFire(`bombpath_choose_relay`, `Disable`, null, 0.2)
-
 
                 EntFire(`bombpath_clearall_relay`, `Trigger`, null, 0.9)
                 EntFire(`bombpath_arrows_clear_relay`, `Trigger`, null, 0.9)
@@ -6640,6 +6501,7 @@ Bread
             Name "w1b1"
             WaitforAllDead "w1a1"
             Where spawnbot
+            Where spawnbot_flank
             TotalCount 25
             MaxActive 5
             SpawnCount 5
@@ -6736,7 +6598,7 @@ Bread
             MaxActive 3
             SpawnCount 3
             WaitBeforeStarting 12
-            WaitBetweenSpawns 11
+            WaitBetweenSpawns 8
             TotalCurrency 25
             RandomChoice
             {
@@ -6769,7 +6631,7 @@ Bread
             MaxActive 6
             SpawnCount 3
             WaitBeforeStarting 10
-            WaitBetweenSpawns 18
+            WaitBetweenSpawns 11
             TotalCurrency 50
             TFBot
             {
@@ -7153,10 +7015,10 @@ Bread
             TotalCount 1
             MaxActive 1
             SpawnCount 1
-            WaitBeforeStarting 12
+            WaitBeforeStarting 17
             WaitBetweenSpawns 0
             TotalCurrency 150
-            FirstSpawnWarningSound mvm\giant_heavy\giant_heavy_entrance.wav
+            
 
             TFBot
             {
@@ -7175,6 +7037,7 @@ Bread
             WaitBeforeStarting 12
             WaitBetweenSpawns 0
             TotalCurrency 150
+            FirstSpawnWarningSound mvm\giant_heavy\giant_heavy_entrance.wav
             // FirstSpawnOutput                                                                                                                                                            
 			// {
 			// 	 Target gamerules                                            
@@ -7349,14 +7212,10 @@ Bread
                 }
                 TFBot
                 {
-                    Item "Bread Biter"
-                    //Template T_TFBot_Soldier_Buff_Banner
                     Class Soldier
-                    Name "Buff Soldier"
-                    Skill Normal
-                    ClassIcon soldier_buff
-                    //Attributes SpawnWithFullCharge
-                    Item "The Buff Banner"
+                    Skill Hard
+                    Item "Bread Biter"
+                    Template T_TFBot_Soldier_Buff_Banner
                 }
                 TFBot
                 {
@@ -7430,11 +7289,11 @@ Bread
             Name "w2b1"
             WaitforAllDead "w2a1"
             Where spawnbot_flank
-            TotalCount 9
+            TotalCount 12
             MaxActive 6
             SpawnCount 3
             WaitBeforeStarting 3
-            WaitBetweenSpawns 10
+            WaitBetweenSpawns 9
             TotalCurrency 50
         
             TFBot
@@ -7449,9 +7308,9 @@ Bread
             Name "w2b2"
             WaitForAllSpawned "w2a2"
             Where spawnbot_side
-            TotalCount 6
-            MaxActive 6
-            SpawnCount 3
+            TotalCount 8
+            MaxActive 8
+            SpawnCount 4
             WaitBeforeStarting 25
             WaitBetweenSpawns 15
             TotalCurrency 150
@@ -7489,6 +7348,7 @@ Bread
                 }
                 TFBot { Template T_TFBot_Medic_QuickUber}
                 TFBot { Template T_TFBot_Medic_QuickUber}
+                TFBot { Template T_TFBot_Medic_QuickUber}
             }
         }
         WaveSpawn
@@ -7512,7 +7372,6 @@ Bread
                 MaxVisionRange 1600
                 Item "Bread Biter"
                 //Template T_TFBot_Soldier_Buff_Banner
-                Class Soldier
                 Name "Buff Soldier"
                 Skill Normal
                 ClassIcon soldier_buff
@@ -7794,11 +7653,11 @@ Bread
             WaitForAllDead "w2d1"
             Where spawnbot_flank
             Randomspawn 1
-            TotalCount 15
+            TotalCount 25
             MaxActive 5
             SpawnCount 5
             WaitBeforeStarting 5
-            WaitBetweenSpawns 10
+            WaitBetweenSpawns 6
             TotalCurrency 50
             //support limited
             Squad 
@@ -7904,7 +7763,7 @@ Bread
                     {
                         ItemName "TF_WEAPON_MEDIGUN"
                         "ubercharge rate bonus" 6.5
-                        "uber duration bonus" -5
+                        "uber duration bonus" -4
                     }
                     MaxVisionRange 2000
                 }
@@ -7915,7 +7774,7 @@ Bread
                     {
                         ItemName "TF_WEAPON_MEDIGUN"
                         "ubercharge rate bonus" 6.5
-                        "uber duration bonus" -5
+                        "uber duration bonus" -4
                     }
                     MaxVisionRange 2000
                 }
@@ -7926,7 +7785,7 @@ Bread
             Name "w2e2"
             WaitForAllDead "w2d2"
             Where spawnbot_flank
-            TotalCount 9
+            TotalCount 12
             MaxActive 3
             SpawnCount 3
             WaitBeforeStarting 3
@@ -7972,7 +7831,7 @@ Bread
             {
                 Target "gamerules"
                 Action "RunScriptCode"
-                Param "ClientPrint(null, 3, `\x078ff347 Hint: Projectile penetration cuts through the thickness of bread`)"
+                Param "ClientPrint(null, 3, `\x078ff347 Hint: Fire, Explosions, and Projectile Penetration cuts through the thickness of bread`)"
             }
 		} //
         WaveSpawn // Dummy
@@ -8023,7 +7882,7 @@ Bread
             FirstSpawnWarningSound "vo\mvm_get_to_upgrade01.mp3"
             FirstSpawnOutput
             {
-                Target "spawnbot_mission_spy"
+                Target "spawnbot_mission_temp" //"spawnbot_mission_spy"
                 Action "Disable"
             }
         }
@@ -8033,11 +7892,11 @@ Bread
 			WaitForAllDead "w2e2"
 			WaitBeforeStarting 50
             FirstSpawnWarningSound misc/halloween/clock_tick.wav
-            FirstSpawnOutput
-            {
-                Target "spawnbot_mission_temp"
-                Action "Disable"
-            }
+            // FirstSpawnOutput
+            // {
+            //     Target "spawnbot_mission_temp"
+            //     Action "Disable"
+            // }
 		}
         WaveSpawn
 		{
@@ -8101,7 +7960,7 @@ Bread
             TotalCount 1
             MaxActive 1
             SpawnCount 1
-            WaitBeforeStarting 60 //60
+            WaitBeforeStarting 60
             WaitBetweenSpawns 0
         
             TotalCurrency 0
@@ -8130,7 +7989,7 @@ Bread
             TotalCount 1
             MaxActive 1
             SpawnCount 1
-            WaitBeforeStarting 66 //66
+            WaitBeforeStarting 66
             WaitBetweenSpawns 0
         
             TotalCurrency 0

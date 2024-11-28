@@ -71,7 +71,7 @@ WaveSchedule
 			Skill Hard
 		}
 	}
-
+	
 	PointTemplates    [$SIGSEGV]    //    this piece of code is to remove the powerup from the game if its dropped, hence making it only be used by the designated class
 	{
 		powerup_fix
@@ -84,7 +84,7 @@ WaveSchedule
             }
         }
     }
-
+	
     SpawnTemplate powerup_fix    [$SIGSEGV]
 
 	Templates
@@ -293,7 +293,7 @@ WaveSchedule
 		{
 			Class Soldier
 			Name "Giga Burst Fire Soldier"
-			ClassIcon soldier_burstfire_hyper_giant
+			ClassIcon soldier_burstfire_hyper_lite
 			Health 4200
 			Skill Expert
 			WeaponRestrictions PrimaryOnly
@@ -1536,7 +1536,7 @@ WaveSchedule
 			{
 				Health 22000
 				Speed 75
-				Name "tankboss"
+				Name "tank_boss"
 				StartingPathTrackNode "tank_path_b_1"
 
 				OnKilledOutput                                  
@@ -2228,7 +2228,7 @@ WaveSchedule
 			{
 				Health 32000
 				Speed 75
-				Name "tankboss"
+				Name "tank_boss"
 				StartingPathTrackNode "tank_path_b_1"
 
 				OnKilledOutput                                  
@@ -2315,7 +2315,7 @@ WaveSchedule
 					EntFire(`FrontUpgradeStationL`, `Enable`)
 					EntFire(`buring_fire_1_timer`, `Disable`)
 					ClientPrint(null,3,`\x08FF54F1FFThe bomb path has changed.`)
-					ClientPrint(null,3,`\x08FF54F1FFAnother bomb will entered the area!`)
+					ClientPrint(null,3,`\x08FF54F1FFAnother bomb will enter the area!`)
 					if(Entities.FindByName(null, `pathchange`) == null)
 					{
 						SpawnEntityFromTable(`training_annotation`, {
@@ -2730,7 +2730,7 @@ WaveSchedule
 				Health 34666
 				Skin 1
 				Speed 75
-				Name "tankboss"
+				Name "tank_boss"
 				StartingPathTrackNode "tank_path_b_1"
 
 				OnKilledOutput                                  

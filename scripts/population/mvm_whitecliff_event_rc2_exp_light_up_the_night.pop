@@ -504,7 +504,7 @@ Real?
 		// doesn't work. this fucking sucks actually
 		"custom item model"			"models/workshop/weapons/c_models/c_switchblade/c_switchblade.mdl"
 		"custom projectile model"	"models/workshop/weapons/c_models/c_switchblade/c_switchblade.mdl"
-		"damage bonus"	2
+		"damage bonus"	1.5
 		"effect bar recharge rate increased"	0
 	}
 	CustomWeapon	// actually I have no idea why I'm putting this here
@@ -514,7 +514,7 @@ Real?
 		"use original class weapon animations" 1
 		"custom item model" "models/empty.mdl"
 		"crit from behind"	1
-		"damage bonus"		2
+		"damage bonus"		1.5
 		"mult smack time"	0.1
 		"damage causes airblast"	1
 	}
@@ -3041,6 +3041,9 @@ Real?
 
 				// stop fucking taunting during the cutscene
 				"OnTrigger"		"@f@filter_redteam@player,$RemoveCond,7,0,-1"
+				"OnTrigger"		"@f@filter_redteam@player,$WeaponSwitchSlot,0,7,-1"
+				"OnTrigger"		"@f@filter_redteam@player,$WeaponSwitchSlot,1,7.5,-1"
+				"OnTrigger"		"@f@filter_redteam@player,$WeaponSwitchSlot,2,8,-1"
 				"OnTrigger"		"@f@filter_redteam@player,$RemoveCond,7,1,-1"
 				"OnTrigger"		"@f@filter_redteam@player,$RemoveCond,7,2,-1"
 				"OnTrigger"		"@f@filter_redteam@player,$RemoveCond,7,3,-1"
@@ -4726,7 +4729,7 @@ Real?
 			math_counter
 			{
 				"targetname"	"tcs_enrage_counters"
-				"max"			"40"
+				"max"			"35"
 				"OnHitMax"		"player,$DisplayTextChat,{blue}Time-Constraint Soul {reset}: Oh I see. You know who else likes to spam canteens?,0.5,1"
 
 				"OnHitMax"		"@f@filter_tcs@player,$AddCond,52 8,3,-1"
@@ -8165,7 +8168,7 @@ Real?
 			ClassIcon	heavy_head_nys
 			Scale	2
 			Skill	Expert
-			Health	160000
+			Health	170000
 			Attributes	MiniBoss
 			Attributes	UseBossHealthBar
 			Action		Mobber
@@ -8288,7 +8291,7 @@ Real?
 				Delay 		0
 				Cooldown	0
 				Repeats		1
-				IfHealthBelow	80001
+				IfHealthBelow	87501
 			}
 			FireInput   
 			{
@@ -8297,7 +8300,7 @@ Real?
 				Param		"960 -5936 704"
 				Delay 		5
 				Repeats		1
-				IfHealthBelow	80001
+				IfHealthBelow	87501
 			}
 			FireInput   
 			{
@@ -8305,7 +8308,7 @@ Real?
 				Action		"Disable"
 				Delay 		0.01
 				Repeats		1
-				IfHealthBelow	80001
+				IfHealthBelow	87501
 			}
 			FireInput   
 			{
@@ -8313,7 +8316,7 @@ Real?
 				Action		"CancelPending"
 				Delay 		0.01
 				Repeats		1
-				IfHealthBelow	80001
+				IfHealthBelow	87501
 			}
 
 			InterruptAction
@@ -8338,7 +8341,7 @@ Real?
 				"dmg taken from self reduced"	0.00001
 				"gesture speed increase"		0.75
 				"move speed bonus"				0.65
-				"dmg taken increased"	0.5
+				"dmg taken increased"	0.45
 				"dmg from melee increased"	2
 				"dmg from ranged reduced"	2
 				"dmg taken mult from special damage type 2"	1.5	// so that the nail minigun isn't abysmal dogshit against specifically this guy
@@ -9256,6 +9259,16 @@ Real?
 		}
 		WaveSpawn
 		{
+			Name	ezclear
+			Support		Limited
+			TotalCount	0
+			MaxActive	0
+			SpawnCount	0
+			FirstSpawnMessage	"{yellow}[NOTICE] Typing '!hiderank' in chat will disable the rank from your hud. Use this if you have a missing texture on your screen!"
+			FirstSpawnWarningSound	"ui/cyoa_ping_available.wav"
+		}
+		WaveSpawn
+		{
 			Name	wave1_aw
 			TotalCurrency	50
 			TotalCount	8
@@ -9382,7 +9395,7 @@ Real?
 			WaitForAllDead	wave1a
 			TotalCurrency	50
 			TotalCount	30
-			MaxActive	12
+			MaxActive	10
 			SpawnCount	3
 			WaitBetweenSpawns	3
 			Where	flankers
@@ -10367,8 +10380,8 @@ Real?
 			TotalCount	0
 			MaxActive	0
 			SpawnCount	0
-			WaitBeforeStarting	5
-			FirstSpawnMessage	"{yellow}Combat Tanks DO NOT deploy and will instead idle at hatch to pave the way for bots."
+			WaitBeforeStarting	25
+			FirstSpawnMessage	"{yellow}[WARNING] Combat Tanks DO NOT deploy and will instead idle at hatch to pave the way for bots."
 			FirstSpawnWarningSound	"ui/cyoa_ping_available.wav"
 		}
 		WaveSpawn
@@ -10767,7 +10780,7 @@ Real?
 				TFBot
 				{
 					Class		Heavyweapons
-					Skill		Normal
+					Skill		Easy
 					Item		"Tomislav"
 					Item		"Capone's Capper"
 					Name		"Tomislav Heavy"
@@ -10880,7 +10893,7 @@ Real?
 		WaveSpawn
 		{
 			Name	wave6c
-			WaitForAllSpawned	wave6b_g
+			WaitForAllDead	wave6b_g
 			TotalCurrency	100
 			Support		1
 			TotalCount	100	// trolling
